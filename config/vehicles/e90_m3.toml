@@ -1,0 +1,22 @@
+# BMW M3 (E90), S65 V8. Facts sourced in docs/phase-1-plan.md section 2.3.
+
+[vehicle]
+name = "BMW M3 (E90)"
+engine = "S65 V8"
+banks = 2
+has_maf_sensor = false            # S65: air flow is modelled, no intake MAF
+transmission = "unknown"          # "6mt" or "dct"; gear derived from v/rpm for 6mt
+max_gears = 7                     # 6-speed manual or 7-speed M DCT: the v/rpm gear bound
+
+[obd]
+protocol = "ISO 15765-4 CAN 500 kbit/s 11-bit"
+forbidden_tx_ids = [0x6F1]        # BMW tester ID: never send
+
+[rpm]
+redline = 8300                    # BMW M quotes 8,300 rpm; other sources say an 8,400 limiter
+bands = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 8400]
+
+[dbc]
+# The OBD port is gatewayed D-CAN: DBC decoding applies only with a PT-CAN tap (not in the MVP).
+file = "bmw_e9x_e8x.dbc"
+enabled = false

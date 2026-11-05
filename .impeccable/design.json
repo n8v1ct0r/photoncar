@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T00:00:00Z",
+  "title": "Design System: Photoncar",
+  "extensions": {
+    "colorMeta": {
+      "roll-white": { "role": "neutral", "displayName": "Roll White", "canonical": "#F5F7F7" },
+      "tulip-ink": { "role": "primary", "displayName": "Tulip Ink", "canonical": "#111417" },
+      "box-rule": { "role": "neutral", "displayName": "Box Rule", "canonical": "#5B666D" },
+      "caution-red": { "role": "tertiary", "displayName": "Caution Red", "canonical": "#C4161C" },
+      "marker-yellow": { "role": "secondary", "displayName": "Marker Yellow", "canonical": "#FFE600" },
+      "marker-green": { "role": "secondary", "displayName": "Marker Green", "canonical": "#5EE38C" },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#C3C9CC" },
+      "unlit-segment": { "role": "neutral", "displayName": "Unlit Segment", "canonical": "#E2E6E7" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Sheet titles." },
+      "headline": { "displayName": "Headline", "purpose": "Section heads and the review drive title." },
+      "title": { "displayName": "Box number", "purpose": "Roadbook box numbers and stage names." },
+      "note": { "displayName": "Note", "purpose": "Roadbook box notes and state lines." },
+      "body": { "displayName": "Body", "purpose": "Prose and tables, tabular figures." },
+      "label": { "displayName": "Label", "purpose": "Badges and tags, uppercase." },
+      "live-text": { "displayName": "Live text", "purpose": "Every tripmeter text element, 20 arcmin or more at 1 m." },
+      "live-digits": { "displayName": "Live digits", "purpose": "Tripmeter digit banks only, 40 arcmin or more at 1 m." }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "swipe",
+        "value": "80ms steps(2, jump-start)",
+        "purpose": "The marker-yellow swipe landing on a selected box; removed under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      { "name": "narrow", "value": "900px" },
+      { "name": "live-wide", "value": "701px" },
+      { "name": "live-columns", "value": "1100px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Button",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Square ink-bordered button; inverts on hover in 1 step.",
+      "html": "<button class=\"ds-btn\">Export laps</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; min-height: 40px; padding: 7px 14px 5px; border: 2px solid #111417; background: #F5F7F7; color: #111417; font: 800 16px Overpass, Helvetica Neue, Arial, sans-serif; border-radius: 0; cursor: pointer; } .ds-btn:hover { background: #111417; color: #F5F7F7; } .ds-btn:focus-visible { outline: 3px solid #111417; outline-offset: 2px; }"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Uppercase label in a 1px ink box.",
+      "html": "<span class=\"ds-tag\">Synthetic</span>",
+      "css": ".ds-tag { display: inline-block; font: 800 13px/1.5 Overpass, Helvetica Neue, Arial, sans-serif; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid #111417; padding: 1px 7px 0; color: #111417; background: #F5F7F7; }"
+    },
+    {
+      "name": "Citation chip",
+      "kind": "chip",
+      "refersTo": "citation-chip",
+      "description": "Source, signal, window, and stat of 1 citation; context citations dashed gray.",
+      "html": "<span class=\"ds-cite\"><b>OBD 0x05</b> · obd.coolant_temp · 09:00.8 to 09:11.9 · min 106.0 °C, 6 samples</span>",
+      "css": ".ds-cite { display: inline-block; font: 400 13px/1.4 Overpass, Helvetica Neue, Arial, sans-serif; font-feature-settings: 'tnum' 1, 'zero' 1; border: 1px solid #111417; padding: 2px 7px 1px; color: #111417; } .ds-cite b { font-weight: 800; }"
+    },
+    {
+      "name": "Device token field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Square 2px ink field; the only input, parked views only.",
+      "html": "<input class=\"ds-input\" type=\"password\" aria-label=\"Device token\">",
+      "css": ".ds-input { font: 400 20px Overpass, Helvetica Neue, Arial, sans-serif; padding: 8px 10px 6px; border: 2px solid #111417; background: #F5F7F7; color: #111417; border-radius: 0; } .ds-input:focus-visible { outline: 3px solid #111417; outline-offset: 2px; }"
+    },
+    {
+      "name": "Navigation link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Text link; the current page carries a 3px ink underline.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Stages</a><a href=\"#\">Live</a><a href=\"#\">Legend</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 22px; font: 600 16px Overpass, Helvetica Neue, Arial, sans-serif; } .ds-nav a { color: #111417; text-decoration: none; } .ds-nav a[aria-current='page'], .ds-nav a:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 7px; }"
+    },
+    {
+      "name": "Roadbook box",
+      "kind": "custom",
+      "refersTo": "roadbook-box-selected",
+      "description": "The signature row: number with caution marks, time and distance, tulip, note with citations; the selected box is swiped marker yellow.",
+      "html": "<div class=\"ds-box\"><div class=\"ds-no\">15<span class=\"ds-marks\">!!</span></div><div class=\"ds-td\"><b>00:01:21</b><br>1.04 mi<br>+0.17</div><div class=\"ds-note\">Coolant 106 °C, over 105 °C.</div></div>",
+      "css": ".ds-box { display: grid; grid-template-columns: 72px 112px minmax(0, 1fr); background: #FFE600; border-bottom: 1px solid #C3C9CC; font-family: Overpass, Helvetica Neue, Arial, sans-serif; color: #111417; font-feature-settings: 'tnum' 1, 'zero' 1; } .ds-box > div { padding: 12px; } .ds-no { font-size: 25px; font-weight: 800; line-height: 1; } .ds-marks { display: block; color: #C4161C; font-size: 20px; } .ds-td { font-size: 13px; } .ds-td b { font-size: 16px; } .ds-note { font-size: 20px; font-weight: 600; line-height: 1.3; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Roadbook",
+    "overview": "A drive is a rally roadbook: a numbered run of ruled boxes, each pinned to a time and a distance, each printing the signals that prove it. The whole system is paper and ink. The ground is a cool roll of white paper, every structure is a ruled line, and color appears only as a mark someone made on the page: a red caution mark, a yellow highlighter swipe, a green highlighter swipe. Nothing glows, floats, or rounds off.",
+    "keyCharacteristics": [
+      "Cool paper ground, ink structure, color only as marks.",
+      "Ruled boxes and hairlines; no radius, no shadow.",
+      "Overpass with tabular figures everywhere; DSEG7 digits only in the tripmeter.",
+      "Every number points at its evidence: citation chips name source, signal, window, and stat.",
+      "Motion is stepped, never eased."
+    ],
+    "rules": [
+      {
+        "name": "The Marks Only Rule",
+        "body": "Red, yellow, and green are marks made on the paper, never surfaces, borders of containers, or decoration. Red means caution; yellow means selected or cited; green means a performance run or lap.",
+        "section": "colors"
+      },
+      { "name": "The Ink On Green Rule", "body": "Only tulip ink sits on marker green. Red or gray on green fails AA (3.69:1 and 3.60:1).", "section": "colors" },
+      { "name": "The Resolved Prints Gray Rule", "body": "A cleared alert stays in the roadbook, printed in box rule gray, marks included; when it is the selected box, it prints ink on the yellow swipe.", "section": "colors" },
+      { "name": "The Tabular Rule", "body": "Every number uses tabular figures and the slashed zero, so columns of times, distances, and values never jitter.", "section": "typography" },
+      {
+        "name": "The Glance Rule",
+        "body": "In the live view no text is smaller than 20 arcmin at 1 m (50.2px at 390 wide, 41.8px at 1440 wide) and digits reach 40 arcmin. A value never moves the layout: each digit bank has fixed positions, padded with blank digits.",
+        "section": "typography"
+      },
+      { "name": "The Units Stay Rule", "body": "A number and its unit never break across lines.", "section": "typography" },
+      { "name": "The Ruled Paper Rule", "body": "Structure is drawn with lines, never with elevation, blur, or tinted panels.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the ground roll white (#F5F7F7) on every surface and state, including errors and the live view.",
+      "Do cite evidence next to every number: source, signal, window, and stat.",
+      "Do keep text to the verified pairs: tulip ink or box rule on roll white, tulip ink or caution red on marker yellow, only tulip ink on marker green.",
+      "Do step motion (at most 2 frames, under 100 ms) and remove it under prefers-reduced-motion.",
+      "Do theme the browser surfaces: marker yellow selection, ink caret, 3px ink focus ring, box rule scrollbars.",
+      "Do print loading, empty, and error states as 1 plain line of text inside the shared frame."
+    ],
+    "donts": [
+      "Don't add shadows, radius, gradients, or glow; this world is flat paper.",
+      "Don't use caution red for anything but caution and anomaly marks.",
+      "Don't put red or gray text on marker green.",
+      "Don't use DSEG7 outside the live tripmeter.",
+      "Don't use a spinner; loading is a sentence.",
+      "Don't set any live-view text below 50.2px at 390 wide or 41.8px at 1440 wide, and never ask for input there.",
+      "Don't build cards or card grids; use ruled rows and ruled tables."
+    ]
+  }
+}

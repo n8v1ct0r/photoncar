@@ -1,0 +1,13 @@
+# Photoncar capture interface. Installed by the owner only, after approval.
+# Listen-only: the controller sends nothing on the bus, not even ACK or error flags.
+# Photoncar checks this at startup and refuses to capture if it is not set.
+
+[Match]
+Name=can0
+
+[Link]
+RequiredForOnline=no
+
+[CAN]
+BitRate=500000
+ListenOnly=yes

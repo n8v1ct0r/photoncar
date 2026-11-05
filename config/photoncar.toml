@@ -1,0 +1,118 @@
+# Photoncar configuration. SI units unless a key name says otherwise.
+# Values marked "proposed" have no external source; the owner approved them on 2026-09-23.
+
+[privacy]
+# The one place the privacy zone radius lives (hard rule 7). The home center is NOT here:
+# it lives only in config/privacy.local.toml, which is gitignored.
+radius_km = 0.5
+
+[can]
+capture_interface = "can0"        # listen-only (hard rule 1)
+request_interface = "can1"        # normal mode, one-shot, allowlisted requests only
+bitrate = 500000
+obd_polling = false               # can1 stays down unless this is true
+
+[obd]
+max_request_hz = 10.0             # hard rule 2 cap
+max_in_flight = 1
+response_timeout_s = 0.1
+fast_pids = [0x0C, 0x0D, 0x11]    # rpm, speed, throttle
+fast_hz_each = 2.0
+slow_pids = [0x03, 0x04, 0x05, 0x0F, 0x10, 0x06, 0x07, 0x08, 0x09, 0x42]
+slow_hz_total = 4.0
+functional_id = 0x7DF
+physical_id = 0x7E0
+
+[gps]
+rate_hz = 10.0
+device = "/dev/ttyACM0"             # NEO-M9N over USB (CDC-ACM); proposed
+
+[imu]
+rate_hz = 104.0                   # LSM6DSOX output rates step 52, 104, 208 Hz
+i2c_bus = 1                       # proposed
+address = 0x6A                    # LSM6DSOX default with SDO low; proposed
+accel_fs_g = 4                    # proposed
+gyro_fs_dps = 500                 # proposed
+
+[store]
+batch_ms = 1000                   # proposed
+
+[live]
+stream_hz = 10.0                  # proposed
+
+[estimator]
+stationary_s = 2.0                # proposed
+align_min_accel_mps2 = 1.0        # proposed
+nis_gate = 6.635
+max_dead_reckon_s = 5.0           # proposed
+max_speed_var = 1.0               # proposed
+
+[performance]
+arm_stationary_s = 1.0
+start_speed_mps = 0.3             # proposed
+brake_min_decel_g = 0.3
+lateral_window_s = 0.5            # proposed
+
+[behavior]
+hard_brake_g = 0.30
+severe_brake_g = 0.45
+hard_accel_g = 0.35
+corner_g = [0.40, 0.50]
+window_s = 1.0
+min_speed_mps = 2.0               # proposed
+shift_ratio_tol = 0.03            # proposed
+shift_dwell_s = 0.5               # proposed
+shift_lookback_s = 0.3            # proposed
+
+[rules.coolant_high]
+threshold_c = 105.0
+on_s = 10.0                       # proposed
+clear_below_c = 102.0             # proposed
+clear_s = 30.0                    # proposed
+
+[rules.trim_warn]
+limit_pct = 10.0
+on_s = 30.0                       # proposed
+min_coolant_c = 85.0
+
+[rules.trim_critical]
+limit_pct = 25.0
+on_s = 10.0                       # proposed
+
+[rules.voltage_low_running]
+threshold_v = 12.5
+on_s = 60.0                       # proposed
+ignore_after_start_s = 10.0       # proposed
+
+[rules.voltage_low_rested]
+threshold_flooded_v = 12.24
+threshold_agm_v = 12.29
+battery_type = "agm"              # "flooded" or "agm"
+min_rest_h = 24.0                 # proposed
+advisory = true
+
+[rules.shared]
+stale_after_polls = 3             # proposed
+realert_s = 300.0                 # proposed
+
+[baseline]
+window_s = 10.0
+z_flag = 4.0                      # proposed
+sustain_s = 30.0                  # proposed
+arm_drives = 3                    # proposed
+arm_windows = 180                 # proposed
+
+[summary]
+model = "claude-haiku-4-5-20251001"
+prompt_version = 1
+max_tokens = 400
+daily_cap_usd = 0.25              # proposed
+per_ip_per_minute = 5             # proposed
+per_ip_per_day = 30               # proposed
+min_sentences = 3
+max_sentences = 5
+input_usd_per_mtok = 1.0
+output_usd_per_mtok = 5.0
+
+[vehicle]
+profile = "e90_m3"

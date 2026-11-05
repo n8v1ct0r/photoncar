@@ -1,0 +1,49 @@
+# Drive data, dataset cache, exports. Never commit drive logs (hard rule 9).
+data/
+build/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.db
+
+# Location-bearing and raw log formats, wherever they land.
+*.gpx
+*.kml
+*.geojson
+*.csv
+*.parquet
+*.asc
+*.blf
+*.log
+*.nmea
+*.ubx
+*.trc
+
+# Secrets and local-only config.
+.env
+.env.*
+!.env.example
+config/privacy.local.toml
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.hypothesis/
+dist/
+
+# Web
+web/node_modules/
+web/dist/
+web/*.tsbuildinfo
+
+# Tools
+test-results/
+playwright-report/
+.DS_Store
+
+# Design review evidence (screenshots of replays); not shipping rasters
+.impeccable/review/

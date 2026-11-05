@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:photoncar:schema:lap:v0",
+  "title": "Photoncar lap v0",
+  "description": "1 lap as columnar arrays at 10 Hz. Relative time only. x and y are meters east and north of the start and finish line midpoint. No dates, no drive IDs, no VIN, no absolute coordinates. Every array in samples has the same length.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "lap_no", "line_id", "duration_ms", "valid", "source", "samples"],
+  "properties": {
+    "schema": { "const": "photoncar.lap/v0" },
+    "lap_no": { "type": "integer", "minimum": 1 },
+    "line_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "duration_ms": { "type": "integer", "minimum": 1 },
+    "valid": { "type": "boolean" },
+    "source": { "enum": ["live", "replay", "synthetic"] },
+    "samples": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["t_ms", "dist_m", "speed_kph", "throttle_pct", "brake", "gear", "rpm", "x", "y"],
+      "properties": {
+        "t_ms": {
+          "description": "Milliseconds from the lap start, every 100 ms.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "integer", "minimum": 0 }
+        },
+        "dist_m": {
+          "description": "Meters from the lap start: the integral of speed.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "number" }
+        },
+        "speed_kph": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "number" }
+        },
+        "throttle_pct": {
+          "description": "Null where the drive has no throttle value.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": ["number", "null"], "minimum": 0, "maximum": 100 }
+        },
+        "brake": {
+          "description": "Null unless the drive has a brake signal.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": ["boolean", "null"] }
+        },
+        "gear": {
+          "description": "Null unless the drive has a gear signal.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": ["integer", "null"] }
+        },
+        "rpm": {
+          "description": "Null where the drive has no engine speed value.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": ["number", "null"], "minimum": 0 }
+        },
+        "x": {
+          "description": "Meters east of the line midpoint. Null where there is no GPS position.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": ["number", "null"] }
+        },
+        "y": {
+          "description": "Meters north of the line midpoint. Null where there is no GPS position.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": ["number", "null"] }
+        }
+      }
+    }
+  }
+}

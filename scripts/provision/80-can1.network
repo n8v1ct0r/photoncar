@@ -1,0 +1,17 @@
+# Photoncar request interface. Installed by the owner only, after approval.
+# Normal mode, used only for allowlisted OBD-II service 01 requests.
+# OneShot=yes: no automatic retransmit of a lost frame.
+# RestartSec=0: no automatic restart after bus-off (the networkd form of restart-ms 0).
+# ActivationPolicy=manual: can1 stays down until the owner runs `networkctl up can1`.
+
+[Match]
+Name=can1
+
+[Link]
+ActivationPolicy=manual
+RequiredForOnline=no
+
+[CAN]
+BitRate=500000
+OneShot=yes
+RestartSec=0

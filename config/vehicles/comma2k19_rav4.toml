@@ -1,0 +1,19 @@
+# comma2k19's RAV4: the car behind the public dataset replays (dongle b0c9d2329ad1606b).
+# Sources:
+# - comma2k19 README at commit 4c7f1a6e1957745beadc1def0e7225f559b09a2a: "Chunks 1-2 of the
+#   dataset are of the RAV4 and the rest is the civic. The dongle_id of the RAV4 is
+#   `b0c9d2329ad1606b` and that of the civic is `99c94dc769b5d96e`."
+# - H. Schafer, E. Santana, A. Haden, R. Biasini, "A Commute in Data: The comma2k19 Dataset",
+#   arXiv:1812.05752v1, section IV.A: "A 2016 Honda Civic Touring and a 2017 Toyota RAV4
+#   Platinum."
+# Neither source names the gearbox or its gear count, so the gear count is unknown.
+
+[vehicle]
+name = "Toyota RAV4 Platinum (2017)"
+transmission = "automatic"        # the fix brief (2026-09-26); gear count unknown
+max_gears = 10                    # unknown gearbox: the v/rpm gear bound for an unknown gearbox
+
+[rpm]
+# [proposed] 1,000 rpm bins for time at rpm. No redline is sourced for this car; the last bin
+# also holds everything above 7,000 rpm.
+bands = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000]

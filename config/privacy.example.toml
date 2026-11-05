@@ -1,0 +1,7 @@
+# Copy to config/privacy.local.toml on the device (gitignored) and fill in the home center.
+# The radius is NOT set here: it lives in config/photoncar.toml [privacy] radius_km.
+# Export and screenshot capture refuse to run while config/privacy.local.toml is missing.
+
+[home]
+lat_deg = "set on the device only"
+lon_deg = "set on the device only"

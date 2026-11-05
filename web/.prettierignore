@@ -1,0 +1,5 @@
+dist
+dist-embed
+node_modules
+pnpm-lock.yaml
+public/fonts

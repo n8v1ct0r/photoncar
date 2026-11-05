@@ -1,0 +1,63 @@
+[project]
+name = "photoncar"
+version = "0.1.0"
+description = "Read-only edge telemetry for cars: CAN, OBD-II, GPS and IMU fused into one timeline."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+license = "MIT"
+dependencies = [
+  "python-can>=4.6,<5",
+  "cantools>=44.1,<45",
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+  "numpy>=2.1",
+  "anthropic>=0.40",
+  "jsonschema>=4.23",
+]
+
+[project.optional-dependencies]
+dataset = ["duckdb>=1.1"]
+
+[project.scripts]
+photoncar = "photoncar.cli:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3",
+  "hypothesis>=6.100",
+  "ruff>=0.6",
+  "mypy>=1.11",
+  "playwright>=1.47",
+]
+
+[build-system]
+requires = ["uv_build>=0.8,<0.12"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+  "dataset: needs the public dataset in data/public (make fetch-dataset)",
+  "vcan: needs a Linux vcan interface",
+  "e2e: needs the built web app and the Playwright browser",
+]
+addopts = "-m 'not dataset and not vcan and not e2e' --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_unreachable = true
+files = ["src", "tests", "scripts"]
+
+[[tool.mypy.overrides]]
+module = ["cantools", "cantools.*", "can", "can.*", "duckdb", "jsonschema", "jsonschema.*"]
+ignore_missing_imports = true
